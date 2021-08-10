@@ -1,18 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useContext } from "react";
+import  dig  from "object-dig"
+import { signInWithGoogle, logOut } from '../firebase/firebase';
+import { AuthContext } from "../firebase/AuthProvider";
 
 const Header = () =>{
+const currentUser = useContext(AuthContext);
+
+
+
+ const buttonRender = () =>{
+  //ログインしている
+    if(dig(currentUser, 'currentUser', 'uid')){//currentUser.currentUser.Im
+      return <button onClick={logOut}>ログアウト</button>
+    }else{ //ログアウトしている
+      return <button onClick={signInWithGoogle}>ログイン</button>
+    }
+  }
 
   return(
     <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
       <p>
-        Edit <code>src/App.tsx</code> and save to reload.
+        ToDoアプリ
       </p>
+      { buttonRender()}
     </header>
   )
 };
 
 
 export default Header;
+
 

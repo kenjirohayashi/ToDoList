@@ -8,16 +8,24 @@ const ToDoBoard = () => {
 
   const currentUser = useContext(AuthContext)
   const [inputName,setName] = useState("")
-  const [todos, setTodos] = useState("")
+  const [todos, setTodos] = useState<any>([])
 
-
+  useEffect(()=>{
+      fetch();
+  }, [currentUser])
+  
+  const fetch = async () =>{
+    if(currentUser.currentUser){ 
+       const data = await API.initGet(currentUser.currentUser.uid)
+       setTodos(data);
+    }
+  }
   const formRender = () =>{
     if(dig(currentUser, 'currentUser', 'uid')){   //ログインしていたらform作成ボタン
       return <form >
-        <textarea placeholder="todo" onChange={(event) => setName(event.target.value) }>
-
+        <textarea placeholder="todo" value={inputName} onChange={(event) => setName(event.target.value) } >
         </textarea>
-        <button onClick={() => post()}>追加</button>
+        <button type="button" onClick={() => post()}>追加</button>
       </form>
     }else{                                        //ログアウトしていたらログインボタン
       return null;
@@ -25,12 +33,21 @@ const ToDoBoard = () => {
   }
 
   const post = () => {
-    API.addTodo(inputName,currentUser.currentUser)
+    if(currentUser.currentUser){ 
+      API.addTodo(inputName,currentUser.currentUser.uid) //firebaseに追加
+      setName(""); //Formを空に
+    }
   }
 
   return(
     <div>
       {formRender()}
+      {/* <ul>
+      {todos.map((content:string,i:Number) => {
+        console.log(content)
+        return <li>{content}</li>
+      })}
+      </ul> */}
     </div>
   )
 }

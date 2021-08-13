@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import  dig  from "object-dig"
-import { signInWithGoogle, logOut } from '../firebase/firebase';
-import { AuthContext } from "../firebase/AuthProvider";
+import { signInWithGoogle, logOut } from '../service/firebase';
+import { AuthContext } from "../provider/AuthProvider";
 
 const Header = () =>{
 const currentUser = useContext(AuthContext);
@@ -9,10 +9,9 @@ const currentUser = useContext(AuthContext);
 
 
  const buttonRender = () =>{
-  //ログインしている
-    if(dig(currentUser, 'currentUser', 'uid')){//currentUser.currentUser.Im
+    if(dig(currentUser, 'currentUser', 'uid')){   //ログインしている
       return <button onClick={logOut}>ログアウト</button>
-    }else{ //ログアウトしている
+    }else{                                        //ログアウトしている
       return <button onClick={signInWithGoogle}>ログイン</button>
     }
   }

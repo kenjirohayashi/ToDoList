@@ -6,7 +6,7 @@ import "firebase/firestore";
 export const initGet = async(uid:string) => {
   const todo = await db.collection("todo")
   .orderBy("createdAt","desc") //createdAt(作成された日時)の降順
-  .where("uid", "==", uid); //uidが一致するものを指定
+  .where("userId", "==", uid); //uidが一致するものを指定
 
   return todo.get().then((snapshot) => {
     const todos: any[] = [];
@@ -17,6 +17,7 @@ export const initGet = async(uid:string) => {
         isComplete: doc.data().isComplete,
       });
     });
+    console.log(todos)
     return todos;
   });
 }
@@ -30,4 +31,12 @@ export const addTodo = (content:string, uid:string) =>{
       userId:uid,
     })
    ;
+}
+
+export const deleteTodo = (id:string) =>{
+  db.collection("todo").doc(id).delete().then(() => {
+    console.log("Document successfully deleted!");
+}).catch((error) => {
+    console.error("Error removing document: ", error);
+});
 }

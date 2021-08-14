@@ -3,6 +3,7 @@ import { AuthContext } from "../provider/AuthProvider";
 import { signInWithGoogle} from '../service/firebase';
 import  dig  from "object-dig"
 import * as API from "../service/api"
+import ToDoList from "./TodoList";
 
 const ToDoBoard = () => {
 
@@ -10,44 +11,46 @@ const ToDoBoard = () => {
   const [inputName,setName] = useState("")
   const [todos, setTodos] = useState<any>([])
 
+  
   useEffect(()=>{
-      fetch();
+    fetch();
   }, [currentUser])
   
   const fetch = async () =>{
-    if(currentUser.currentUser){ 
-       const data = await API.initGet(currentUser.currentUser.uid)
-       setTodos(data);
+    if(dig(currentUser, 'currentUser','uid') && (currentUser.currentUser)){ 
+      const data = await API.initGet(currentUser.currentUser.uid)
+      await setTodos(data);
     }
   }
+
   const formRender = () =>{
     if(dig(currentUser, 'currentUser', 'uid')){   //ログインしていたらform作成ボタン
-      return <form >
-        <textarea placeholder="todo" value={inputName} onChange={(event) => setName(event.target.value) } >
-        </textarea>
-        <button type="button" onClick={() => post()}>追加</button>
-      </form>
+      return (
+        <form >
+          <input placeholder="todo" value={inputName} onChange={(event) => setName(event.currentTarget.value) } ></input>
+          <button type="button" onClick={() => post()}>追加</button>
+        </form>
+      )
     }else{                                        //ログアウトしていたらログインボタン
       return null;
     }
   }
 
-  const post = () => {
+  const post = async() => {
     if(currentUser.currentUser){ 
-      API.addTodo(inputName,currentUser.currentUser.uid) //firebaseに追加
-      setName(""); //Formを空に
+      await API.addTodo(inputName,currentUser.currentUser.uid) //firebaseに追加
+      await setName(""); //Formを空に
+      fetch();
     }
   }
+
+  // console.log(todoList)
 
   return(
     <div>
       {formRender()}
-      {/* <ul>
-      {todos.map((content:string,i:Number) => {
-        console.log(content)
-        return <li>{content}</li>
-      })}
-      </ul> */}
+      <h2>your todo</h2>
+      <ToDoList todos={todos} fetch={fetch}/>
     </div>
   )
 }

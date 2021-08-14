@@ -31,6 +31,7 @@ export const addTodo = (content:string, uid:string) =>{
       userId:uid,
     })
    ;
+   
 }
 
 export const deleteTodo = (id:string) =>{
@@ -39,4 +40,10 @@ export const deleteTodo = (id:string) =>{
 }).catch((error) => {
     console.error("Error removing document: ", error);
 });
+}
+
+export const checkedTodo = (id:string, isComplete:boolean) =>{
+  db.collection("todo").doc(id).update({ 
+    isComplete: !isComplete,
+  })
 }

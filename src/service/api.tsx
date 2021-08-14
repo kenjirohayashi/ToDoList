@@ -27,7 +27,7 @@ export const addTodo = (content:string, uid:string) =>{
     db.collection("todo").add({
       content:content,
       createdAt:firebase.firestore.FieldValue.serverTimestamp(),
-      isComplete:true,
+      isComplete:false,
       userId:uid,
     })
    ;

@@ -55,7 +55,7 @@ const ToDoBoard = () => {
 
 
   const post = async() => {
-    if(currentUser.currentUser && (inputName === "")){ 
+    if(currentUser.currentUser){ 
         await API.addTodo(inputName,currentUser.currentUser.uid) //firebaseに追加
         await setName(""); //Formを空に
         fetch();

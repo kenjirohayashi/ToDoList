@@ -6,7 +6,7 @@ import "firebase/firestore";
 export const initGet = async(uid:string) => {
   const todo = await db.collection("todo")
   .orderBy("createdAt","desc") //createdAt(作成された日時)の降順
-  .where("userId", "==", uid); //uidが一致するものを指定
+  .where("userId", "==", uid); //userIdが一致するものを指定
 
   return todo.get().then((snapshot) => {
     const todos: any[] = [];

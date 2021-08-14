@@ -1,7 +1,4 @@
-import React, { useState, useEffect, useContext} from "react";
-import { AuthContext } from "../provider/AuthProvider";
-import { signInWithGoogle} from '../service/firebase';
-import  dig  from "object-dig"
+import React from "react";
 import * as API from "../service/api"
 import { ListItem, ListItemIcon, Checkbox, ListItemText, ListItemSecondaryAction, IconButton, makeStyles } from "@material-ui/core";
 import DeleteIcon from '@material-ui/icons/Delete';

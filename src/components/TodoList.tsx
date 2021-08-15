@@ -7,6 +7,7 @@ const useStyles = makeStyles(() => ({
   root: {
     maxWidth: 360,
     margin: 'auto',
+    marginTop: '60px'
   },
   ul: {
     paddingLeft: 0,

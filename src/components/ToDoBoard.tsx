@@ -14,6 +14,12 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: 'center',
       width: "100%",
     },
+    form:{
+      marginTop:"50px",
+    },
+    loginButton:{
+      marginTop: "30px"
+    },
   }),
 );
 
@@ -39,14 +45,14 @@ const ToDoBoard = () => {
   const formRender = () =>{
     if(dig(currentUser, 'currentUser', 'uid')){   //ログインしていたらform作成ボタン
       return (
-        <form noValidate autoComplete="off">
+        <form noValidate autoComplete="off" className={classes.form}>
           <TextField label="todo name" value={inputName} onChange={(event) => setName(event.currentTarget.value) } />
           <Button disabled={inputName.length > 0 ? false : true}
           variant="contained" type="button" onClick={() => post()}>追加</Button>
         </form>
       )
     }else{                                        //ログアウトしていたらログインボタン
-      return <button onClick={signInWithGoogle}>ログイン</button>
+      return <Button variant="contained" onClick={signInWithGoogle} className={classes.loginButton}>ログイン</Button>
     }
   }
 

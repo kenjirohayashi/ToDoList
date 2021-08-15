@@ -14,9 +14,6 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: 'center',
       width: "100%",
     },
-    h:{
-      marginTop: "30px",
-    }
   }),
 );
 
@@ -49,7 +46,7 @@ const ToDoBoard = () => {
         </form>
       )
     }else{                                        //ログアウトしていたらログインボタン
-      return null;
+      return <button onClick={signInWithGoogle}>ログイン</button>
     }
   }
 
@@ -62,13 +59,18 @@ const ToDoBoard = () => {
     }
   }
 
-  // console.log(todoList)
+  const showTodoList = () => {
+    if(dig(currentUser, 'currentUser','uid')){
+     return(
+      <ToDoList todos={todos} fetch={fetch}/>
+     )
+    }
+  }
 
   return(
     <div className={classes.root}>
       {formRender()}
-      <h2 className={classes.h}>your todo</h2>
-      <ToDoList todos={todos} fetch={fetch}/>
+      {showTodoList()}
     </div>
   )
 }

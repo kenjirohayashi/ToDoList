@@ -1,4 +1,3 @@
-import React, { useState, useEffect, useContext} from "react";
 import {db} from "./firebase"
 import firebase from 'firebase/app';
 import "firebase/firestore";
@@ -9,7 +8,7 @@ export const initGet = async(uid:string) => {
   .where("userId", "==", uid); //userIdが一致するものを指定
 
   return todo.get().then((snapshot) => {
-    const todos: any[] = [];
+    let todos: any[] = [];
     snapshot.forEach((doc)=>{ 
       todos.push({
         id: doc.id,
@@ -17,7 +16,6 @@ export const initGet = async(uid:string) => {
         isComplete: doc.data().isComplete,
       });
     });
-    console.log(todos)
     return todos;
   });
 }

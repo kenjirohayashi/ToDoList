@@ -15,9 +15,13 @@ const useStyles = makeStyles(() => ({
   list: {
     justifyContent: 'space-between',
   },
+  h:{
+    marginTop: "30px",
+  }
 }));
 
 const ToDoList = (props:any) => {
+
 
   const deleteHandler = async(id:string) => {
     await API.deleteTodo(id);
@@ -34,10 +38,6 @@ const ToDoList = (props:any) => {
   const todoList = props.todos.map((todo:any, i:number) => {
     return(
       <>
-        {/* <li key={i}>
-          {todo.content}
-          <button onClick={() => deleteHandler(todo.id)}>削除</button>
-        </li> */}
         <ListItem key={todo.id}>
           <ListItemIcon>
             <Checkbox checked={todo.isComplete} onChange={() => completeHandler(todo.id, todo.isComplete)}/>
@@ -55,6 +55,7 @@ const ToDoList = (props:any) => {
 
   return(
     <div className={classes.root}>
+      <h2 className={classes.h}>your todo</h2>
       <ul className={classes.ul}>{todoList}</ul>
     </div>
   )
